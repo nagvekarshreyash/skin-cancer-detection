@@ -8,4 +8,5 @@ google-generativeai
 python-dotenv
 transformers
 torch
-gunicorn
+gunicorn==20.1.0
+Werkzeug>=2.0.0

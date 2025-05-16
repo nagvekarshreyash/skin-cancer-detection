@@ -199,6 +199,18 @@ def get_precautions(condition_type):
     }
     return precautions.get(condition_type, 'Please consult a healthcare professional for proper evaluation.')
 
+# At the top of your file, add:
+from werkzeug.middleware.proxy_fix import ProxyFix
+
+# After creating the Flask app, add:
+app.wsgi_app = ProxyFix(app.wsgi_app)
+
+# Update the CORS configuration
+CORS(app, resources={
+    "*": {"origins": "*"}
+})
+
+# In your main block, update:
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, threaded=True)
