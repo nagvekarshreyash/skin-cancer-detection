@@ -1,7 +1,11 @@
 flask
-opencv-python
+flask-cors
+opencv-python-headless
 numpy
 ultralytics
-pillow
-python-dotenv
+Pillow
 google-generativeai
+python-dotenv
+transformers
+torch
+gunicorn

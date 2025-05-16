@@ -14,18 +14,11 @@ import torch
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={
-    r"/predict": {
-        "origins": ["http://localhost:8081", "https://7e23-2409-40c2-204e-daff-50c8-ecf9-4912-c164.ngrok-free.app"],
-        "methods": ["POST"],
-        "allow_headers": ["Content-Type"]
-    }
-})
+CORS(app)
 
 # Initialize models
-YOLO_MODEL_PATH = '/Users/Shri/Desktop/skin cancerapp/Skincancer /yolov8m/best.pt'
+YOLO_MODEL_PATH = os.path.join(os.path.dirname(__file__), 'yolov8m/best.pt')
 yolo_model = YOLO(YOLO_MODEL_PATH)
-
 
 # Configure Gemini AI
 api_key = os.getenv('GOOGLE_API_KEY')
@@ -207,4 +200,5 @@ def get_precautions(condition_type):
     return precautions.get(condition_type, 'Please consult a healthcare professional for proper evaluation.')
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    port = int(os.environ.get("PORT", 8000))
+    app.run(host="0.0.0.0", port=port)
