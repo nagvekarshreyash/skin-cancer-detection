@@ -3,10 +3,12 @@ services:
     name: skin-cancer-detection
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app --timeout 300 --workers 1 --threads 4
+    startCommand: gunicorn app:app --timeout 300 --workers 1 --threads 8
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.0
+      - key: GOOGLE_API_KEY
+        sync: false
       - key: WEB_CONCURRENCY
         value: 1
     initialDeployHook: python -c "import torch; torch.hub.download_url_to_file('https://ultralytics.com/assets/yolov8n.pt', 'yolov8n.pt')"
